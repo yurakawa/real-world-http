@@ -1,0 +1,35 @@
+[req]
+distinguished_name = req_distinguished_name
+
+[CA]
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,keyCertSign,cRLSign
+
+[Server]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature,dataEncipherment
+extendedKeyUsage = serverAuth
+
+[Client]
+basicConstraints = CA:FALSE
+keyUsage = digitalSignature,dataEncipherment
+extendedKeyUsage = clientAuth
+
+[req_distinguished_name]
+commonName = Common Name (eg, fully qualified host name)
+commonName_max = 64
+emailAddress = Email Address
+emailAddress_max = 64
+
+# デフォルト国コード
+countryName_default = JP
+# デフォルト県/州
+stateOrProvinceName_default = Tokyo
+# デフォルト都市名
+localityName_default = Itabashi
+# デフォルト組織名
+0.organizationName_default = example.com
+# デフォルトコモンネーム
+commonName_default = localhost
+# デフォルト管理者メールアドレス
+emailAddress_default = webmaster@example.com
