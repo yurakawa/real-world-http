@@ -19,6 +19,7 @@ func main() {
     certPool.AppendCertsFromPEM(cert) // PEM は BASE64エンコードしたバイナリにヘッダとフッダをつけたデータ構造
     tlsConfig := &tls.Config{
         RootCAs: certPool,
+        // InsecureSkipVerify: true, // 証明書を確認しない設定
     }
     tlsConfig.BuildNameToCertificate()
 
