@@ -10,13 +10,13 @@ import (
 )
 
 func main() {
-    // 証明書を読み込む
+    // 証明書(Certification)を読み込む
     cert, err := ioutil.ReadFile("ca.crt")
     if err != nil {
         panic(err)
     }
-    certPool := x509.NewCertPool()
-    certPool.AppendCertsFromPEM(cert)
+    certPool := x509.NewCertPool() // X509 は ISOで定められた証明書の形式
+    certPool.AppendCertsFromPEM(cert) // PEM は BASE64エンコードしたバイナリにヘッダとフッダをつけたデータ構造
     tlsConfig := &tls.Config{
         RootCAs: certPool,
     }
