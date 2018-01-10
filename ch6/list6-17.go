@@ -14,7 +14,7 @@ func handlerChunkedResponse(w http.ResponseWriter, r *http.Request) {
     }
     for i := 1; i <= 10; i++ {
         fmt.Fprintf(w, "Chunk #%d\n", i)
-       flusher.Flush()
+        flusher.Flush()
         time.Sleep(500 * time.Millisecond)
     }
     flusher.Flush()
