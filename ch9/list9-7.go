@@ -84,7 +84,12 @@ func main() {
     for {
         select {
         case <-ctx.Done():
-            return
+            fmt.Println("Connection close from server")
+            events, ctx, err = EventSource("http://localhost:18888/prime")
+            if err != nil {
+                panic(err)
+            }
+            continue
         case event := <-events:
             fmt.Printf("Event(ID=%s, Event=%s): %s\n", event.ID, event.Name, event.Data)
         }
