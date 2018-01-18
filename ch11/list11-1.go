@@ -10,7 +10,7 @@ import (
     "io"
     "net/http"
     "os"
-    "strings"
+    "io/ioutil"
 )
 
 // GitHubで取得したものを貼り付けてください
@@ -79,6 +79,17 @@ func main() {
         panic(err)
     }
     client := oauth2.NewClient(oauth2.NoContext, conf.TokenSource(oauth2.NoContext, token))
-    // ここで様々なことを行う
+
+    // Email取得
+    resp, err := client.Get("https://api.github.com/user/emails")
+    if err != nil {
+        panic (err)
+    }
+    defer resp.Body.Close()
+    emails, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(string(emails))
 }
 
