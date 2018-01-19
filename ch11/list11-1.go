@@ -11,6 +11,7 @@ import (
     "net/http"
     "os"
     "io/ioutil"
+    "strings"
 )
 
 // GitHubで取得したものを貼り付けてください
@@ -91,5 +92,38 @@ func main() {
         panic(err)
     }
     fmt.Println(string(emails))
+
+    // gist投稿
+    gist := `{
+        "description": "API example",
+        "public": true,
+        "files": {
+            "hello_from_rest_api.txt": {
+                "content":"Hello World"
+            }
+        }
+    }`
+
+    // 投稿
+    resp2, err := client.Post("https://api.github.com/gists", "application/json", strings.NewReader(gist))
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(resp2.Status)
+    defer resp2.Body.Close()
+
+    // 結果をパースする
+    type GistResult struct {
+        Url string `json: "html_url"`
+    }
+    gistResult := &GistResult{}
+    err = json.NewDecoder(resp2.Body).Decode(&gistResult)
+    if err != nil {
+        panic(err)
+    }
+    if gistResult.Url != "" {
+        // ブラウザを開く
+        open.Start(gistResult.Url)
+    }
 }
 
